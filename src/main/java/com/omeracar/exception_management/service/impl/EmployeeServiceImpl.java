@@ -2,6 +2,9 @@ package com.omeracar.exception_management.service.impl;
 
 import com.omeracar.exception_management.dto.DtoDepartment;
 import com.omeracar.exception_management.dto.DtoEmployee;
+import com.omeracar.exception_management.exception.BaseException;
+import com.omeracar.exception_management.exception.ErrorMessage;
+import com.omeracar.exception_management.exception.MessageType;
 import com.omeracar.exception_management.model.Department;
 import com.omeracar.exception_management.model.Employee;
 import com.omeracar.exception_management.repository.EmployeeRepository;
@@ -26,7 +29,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         Optional<Employee> optional= employeeRepository.findById(id);
         if (optional.isEmpty()){
-          return null;
+          throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST,id.toString()));
         }
         Employee employee=optional.get();
         Department department=employee.getDepartment();
